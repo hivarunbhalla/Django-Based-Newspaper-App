@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if user.is_authenticated %}
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Welcome, {{ user.username }}!</h5>
+                        <hr>
+                        <p class="card-text">Your age: {{ user.age }}</p>
+                        <p class="card-text">Email: {{ user.email }}</p>
+                        <p class="card-text">Member since: {{ user.date_joined|date:"F d, Y" }}</p>
+                        <a href="{% url 'article_new' %}" class="btn btn-success ml-2">+ New</a>
+                        <a href="{% url 'article_list' %}" class="btn btn-info ml-2">All Articles</a>
+                        <form action="{% url 'logout' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger ml-2">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Welcome to Varun Newspaper</h5>
+                        <p class="card-text">Stay informed with the latest news and updates!</p>
+                        <a href="{% url 'login' %}" class="btn btn-primary">Log In</a>
+                        <a href="{% url 'signup' %}" class="btn btn-success">Sign Up</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}
